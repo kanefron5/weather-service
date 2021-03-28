@@ -1,0 +1,13 @@
+name: weather-service
+version: 0.1.0
+
+authors:
+  - Roman Zabolotskikh <kanefron5@gmail.com>
+
+targets:
+  weather-service:
+    main: src/weather-service.cr
+
+crystal: 1.0.0
+
+license: MIT
