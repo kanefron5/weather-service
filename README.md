@@ -1,18 +1,46 @@
 # weather-service
 
-TODO: Write a description here
+Программа для записи текущей погоды в _/etc/update-motd.d/50-motd-news_. Содержимое данного файла отображается при подключении по ssh/открытии нового терминала в Ubuntu 20.04
 
 ## Installation
 
-TODO: Write installation instructions here
+Для корректной работы необходимо создать systemd сервис, запускающийся по таймеру
 
-## Usage
+`sudo nano /etc/systemd/system/update-motd.service`\
+[Unit]\
+Description=Обновляет погоду, отображаему при подключении терминала
 
-TODO: Write usage instructions here
+[Service]\
+Type=simple\
+ExecStart=**[PATH_TO_weather-service]** &
 
-## Development
+[Install]\
+WantedBy=multi-user.target
+\
+\
+\
+`sudo nano /etc/systemd/system/update-motd.service`\
+[Unit]\
+Description=Запускает скрипт для обновления погоды раз в 10мин
 
-TODO: Write development instructions here
+[Timer]\
+OnBootSec=1min\
+OnUnitActiveSec=10min\
+Unit=update-motd.service
+
+[Install]\
+WantedBy=timers.target
+\
+\
+\
+\
+\
+\
+`sudo systemctl enable update-motd.service`\
+`sudo systemctl enable update-motd.timer`\
+`sudo systemctl start update-motd.service`\
+`sudo systemctl start update-motd.timer`
+
 
 ## Contributing
 

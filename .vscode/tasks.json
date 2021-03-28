@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "shards build --progress  && clear && ./bin/weather-service",
+            "group": {
+				"kind": "build",
+				"isDefault": true
+			},
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "shards build --production --progress --release && clear && ./bin/weather-service"
+        }
+    ]
+}
