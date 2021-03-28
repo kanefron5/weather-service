@@ -42,14 +42,6 @@ WantedBy=timers.target
 `sudo systemctl start update-motd.timer`
 
 
-## Contributing
-
-1. Fork it (<https://github.com/your-github-user/weather-service/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
 ## Contributors
 
-- [Roman Zabolotskikh](https://github.com/your-github-user) - creator and maintainer
+- [Roman Zabolotskikh](https://github.com/kanefron5) - creator and maintainer
