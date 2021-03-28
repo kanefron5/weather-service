@@ -3,6 +3,7 @@ require "json"
 require "system/user"
 
 class Main
+  @TOKEN = ""
   def start
     # https://ipwhois.app/json/?lang=ru
     ip_info = JSON.parse(HTTP::Client.get("https://ipwhois.app/json/?lang=ru").body)
@@ -12,7 +13,7 @@ class Main
     params = URI::Params.encode({
       "lat"   => latitude.to_s,
       "lon"   => longitude.to_s,
-      "appid" => "e746f2e48db8bf0c70400e444525e6da",
+      "appid" => @TOKEN,
       "lang"  => "ru",
       "units" => "metric",
     })
