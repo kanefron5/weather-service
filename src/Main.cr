@@ -1,9 +1,9 @@
 require "http/client"
 require "json"
-require "system/user"
 require "option_parser"
 require "./Constants.cr"
 require "./Templates.cr"
+require "colorize"
 
 class Main
   @SERVICE_NAME = "update-motd.service"
@@ -35,7 +35,7 @@ class Main
         exit
       end
       parser.invalid_option do |flag|
-        STDERR.puts "ERROR: #{flag} is not a valid option."
+        STDERR.puts "ERROR: #{flag} is not a valid option.".colorize(:red)
         STDERR.puts parser
         exit(1)
       end
@@ -88,11 +88,11 @@ class Main
       begin
         File.write(file_name, formatted_content, mode: "w")
       rescue
-        STDERR.puts "Скрипт необходимо запускать с sudo!"
+        STDERR.puts "Скрипт необходимо запускать с sudo!".colorize(:red)
         exit -1
       end
     {% else %}
-      STDERR.puts "Для дополнительной функциональности используйте Linux"
+      STDERR.puts "Для дополнительной функциональности используйте Linux".colorize(:red)
     {% end %}
   end
 
@@ -101,7 +101,7 @@ class Main
       begin
         bin_file_path = Dir.current + "/weather-service"
         if (!File.exists?(bin_file_path))
-          STDERR.puts "Запуск программы должен производиться из директории, в которой она находится!"
+          STDERR.puts "Запуск программы должен производиться из директории, в которой она находится!".colorize(:red)
           exit -1
         end
 
@@ -126,12 +126,14 @@ class Main
         Process.new("sudo", ["systemctl", "enable", @TIMER_NAME]).wait
         Process.new("sudo", ["systemctl", "start", @SERVICE_NAME]).wait
         Process.new("sudo", ["systemctl", "start", @TIMER_NAME]).wait
+
+        puts "Успешно установлено!".colorize(:green)
       rescue
-        STDERR.puts "Скрипт необходимо запускать с sudo!"
+        STDERR.puts "Скрипт необходимо запускать с sudo!".colorize(:red)
         exit -1
       end
     {% else %}
-      STDERR.puts "Данный функционал доступен только в ОС Linux"
+      STDERR.puts "Данный функционал доступен только в ОС Linux".colorize(:red)
     {% end %}
   end
 
@@ -140,7 +142,7 @@ class Main
       begin
         systemd_path = "/etc/systemd/system/"
         if (!File.exists?(systemd_path))
-          STDERR.puts "В системе отсутсвует systemd"
+          STDERR.puts "В системе отсутсвует systemd".colorize(:red)
           exit -1
         end
         Process.new("sudo", ["systemctl", "stop", @SERVICE_NAME]).wait
@@ -163,13 +165,13 @@ class Main
         Process.new("sudo", ["systemctl", "daemon-reload"]).wait
 
         writeFile("")
-        puts "Все сервисы удалены!"
+        puts "Все сервисы удалены!".colorize(:green)
       rescue
-        STDERR.puts "Скрипт необходимо запускать с sudo!"
+        STDERR.puts "Скрипт необходимо запускать с sudo!".colorize(:red)
         exit -1
       end
     {% else %}
-      STDERR.puts "Данный функционал доступен только в ОС Linux"
+      STDERR.puts "Данный функционал доступен только в ОС Linux".colorize(:red)
     {% end %}
   end
 end
